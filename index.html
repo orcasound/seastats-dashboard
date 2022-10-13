@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SeaStats Dashboard</title>
+  <link rel="stylesheet" href="/src/styles/index.css">
+  <style>
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    #SeaStats {
+      height: 100%;
+      overflow: hidden;
+    }
+  </style>
+</head>
+
+<body>
+  <script type="module" src="/src/main.jsx"></script>
+  <script class="showScript">
+    window.addEventListener('DOMContentLoaded', (event) => {
+
+      // Render to default root on load
+      window.seaStats.mount();
+    });
+  </script>
+
+  <div id="SeaStats"></div>
+</body>
+
+</html>

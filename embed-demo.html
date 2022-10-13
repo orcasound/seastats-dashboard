@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SeaStats Embed Examples</title>
+  <link rel="stylesheet" href="/src/styles/index.css">
+</head>
+
+<body>
+  <script type="module" src="/src/main.jsx"></script>
+
+  <div id="SeaStatsWrapper">
+    <div id="SeaStats"></div>
+  </div>
+  <div id="DivAWrapper">
+    <div id="DivA"></div>
+  </div>
+  <div id="DivBWrapper">
+    <div id="DivB"></div>
+  </div>
+  <dialog id="Dialog">
+    <div class="content"></div>
+    <form method="dialog">
+      <button value="cancel">Close</button>
+    </form>
+  </dialog>
+
+  <div class="content">
+    <h2>Controls:</h2>
+    <div class="inputs">
+      <label for="organizationKey">Organization Key:</label>
+      <input type="text" id="organizationKey" value="olab" />
+      <label for="stationKey">Station Key:</label>
+      <input type="text" id="stationKey" value="fibs-01" />
+    </div>
+    <div class="buttons">
+      <button id="Unmount">Unmount</button>
+    </div>
+    <h2>Notes:</h2>
+    <ul>
+      <li>In this example, the dashboard initially renders immediately to the default root, but this is just one
+        possibility. Use the buttons above to see other options.</li>
+      <li>For best results, you should set a height on any container you mount a dashboard instance to.</li>
+      <li>You can spawn a dashboard instance at any time, to any root by specifying a query selector. Example:
+        <code>window.seaStats.mount("#DivA", {organizationKey: "olab", stationKey: "fibs-01"})</code>. Or omit the
+        selector to use the default option of <code>#SeaStats</code>.
+      </li>
+      <li>Mounting automatically unmounts any other existing dashboard instance first.</li>
+    </ul>
+    <h2>Example Code:</h2>
+    <script class="showScript">
+      window.addEventListener('SeaStats_Loaded', (event) => {
+        function getOptions() {
+          return {
+            organizationKey: document.querySelector('#organizationKey').value,
+            stationKey: document.querySelector('#stationKey').value,
+          };
+        }
+        const buttonsDiv = document.querySelector('.buttons');
+
+        // Render to default root on load
+        window.seaStats.mount(undefined, getOptions());
+
+        // Mount to different divs
+        for (const i of ['A', 'B']) {
+          const button = document.createElement('button');
+          button.innerText = `Mount to Div ${i}`;
+          buttonsDiv.appendChild(button);
+          button.addEventListener('click', function () {
+            window.seaStats.mount(`#Div${i}`, getOptions());
+          })
+        }
+
+        // Mount to dialog
+        const buttonDialog = document.createElement('button');
+        buttonDialog.innerText = `Mount to Dialog`;
+        buttonsDiv.appendChild(buttonDialog);
+        buttonDialog.addEventListener('click', function () {
+          window.seaStats.mount(`#Dialog .content`, getOptions());
+          document.querySelector("#Dialog").showModal();
+        })
+
+        // Mount with custom options
+        const buttonCustom = document.createElement('button');
+        buttonCustom.innerText = `Mount with custom options`;
+        buttonsDiv.appendChild(buttonCustom);
+        buttonCustom.addEventListener('click', function () {
+          window.seaStats.mount(undefined, {
+            ...getOptions(),
+            chartColors: ['blue', 'purple'],
+            styles: 'minimal',
+            charts: [
+              {
+                title: "Daily detections",
+                component: "DailyDetectionsChart",
+              },
+              {
+                title: "Acoustic events",
+                component: "AcousticEventsChart",
+              },
+            ]
+          });
+        })
+
+        // Mount with custom title
+        const buttonCustomTitle = document.createElement('button');
+        buttonCustomTitle.innerText = `Mount with custom title`;
+        buttonsDiv.appendChild(buttonCustomTitle);
+        buttonCustomTitle.addEventListener('click', function () {
+          const customOptions = {
+            ...new window.seaStats.options(),
+            ...getOptions(),
+          };
+          const dailyDetectionsConfig = customOptions.charts.find((chart) => chart.component === 'DailyDetectionsChart');
+          if (dailyDetectionsConfig) {
+            dailyDetectionsConfig.title = "CUSTOM TITLE!";
+          }
+          window.seaStats.mount(undefined, customOptions);
+        })
+
+        // Clean up when modal closes
+        document.querySelector("#Dialog").addEventListener('close', () => {
+          window.seaStats.unmount();
+        });
+
+        // Unmount on click
+        document.querySelector("#Unmount").addEventListener('click', function () {
+          window.seaStats.unmount();
+        })
+      });
+    </script>
+  </div>
+
+  <style>
+    .content {
+      padding: 20px;
+    }
+
+    .buttons {
+      margin: 20px 0;
+      display: flex;
+      gap: 10px;
+    }
+
+    #SeaStatsWrapper,
+    #DivAWrapper,
+    #DivBWrapper {
+      padding: 10px;
+      background: rgb(80, 213, 254);
+    }
+
+    #SeaStatsWrapper::before,
+    #DivAWrapper::before,
+    #DivBWrapper::before {
+      content: "Default root";
+      display: block;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    #DivAWrapper {
+      background: rgb(173, 253, 181);
+    }
+
+    #DivAWrapper::before {
+      content: "Div A";
+    }
+
+    #DivBWrapper {
+      background: rgb(253, 253, 173);
+    }
+
+    #DivBWrapper::before {
+      content: "Div B";
+    }
+
+    #Dialog .content {
+      width: 80vw;
+      height: 80vh;
+    }
+
+    .showScript {
+      display: block;
+      background: #efefef;
+      white-space: pre;
+      overflow: auto;
+      font-family: monospace;
+    }
+  </style>
+</body>
+
+</html>

@@ -1,0 +1,377 @@
+:root {
+  --ssButtonCornerRadius: 4px;
+  --ssCardCornerRadius: 16px;
+  --ssTextColor: #213547;
+  --ssTextColorGrey: #455e74;
+}
+
+.SeaStats_AppRoot .ss_App.all-styles {
+  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  color: var(--ssTextColor);
+  background-color: #ffffff;
+
+  & h2,
+  & h3 {
+    font-size: 20px;
+    margin: 0;
+  }
+
+  & p,
+  & ul,
+  & ol,
+  & dl,
+  & table {
+    margin: 1em 0;
+  }
+
+  & a,
+  & button,
+  & input[type="date"],
+  & select {
+    font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 13px;
+    display: inline-block;
+    color: var(--ssTextColor);
+    text-decoration: inherit;
+    padding: 7px 7px 6px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    appearance: none;
+    border-radius: var(--ssButtonCornerRadius);
+    background: #fff;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+    text-align: left;
+
+    &:disabled {
+      background: #eee;
+      cursor: initial;
+    }
+  }
+
+  & input[type="date"],
+  & select {
+    &:hover {
+      color: #192b3b;
+      background: #eee;
+    }
+  }
+
+  & a,
+  & button {
+    &:hover {
+      color: #192b3b;
+      background: #eee;
+    }
+  }
+
+  .ss_ContentWrapper {
+    > .ss_header {
+      & h1 {
+        font-size: 24px;
+        margin: 0;
+        display: flex;
+        gap: var(--ssGapSmall);
+      }
+
+      .ss_info {
+        font-size: 12px;
+        background: var(--ssColorInfo);
+        color: white;
+        font-weight: bold;
+        border-radius: 50px;
+        width: 1em;
+        height: 1em;
+        text-align: center;
+        box-sizing: content-box;
+        text-align: center;
+        padding: 4px;
+        border: 2px solid white;
+
+        &:hover {
+          background: var(--ssColorInfoHover);
+        }
+      }
+    }
+
+    > .ss_content {
+      .ss_description {
+        max-width: 45em;
+      }
+
+      .ss_modalOverlay {
+        .ss_modalFrame {
+          filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.15));
+        }
+        .ss_modalContent {
+          border-radius: var(--ssButtonCornerRadius);
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+        }
+      }
+    }
+
+    > .ss_footer {
+      color: var(--ssTextColorGrey);
+
+      & a {
+        padding: 0;
+        display: inline;
+        border: none;
+        font-size: inherit;
+        font-weight: inherit;
+        background: transparent;
+
+        &:hover {
+          color: var(--ssTextColor);
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  .ss_Sidebar {
+    border-right: 1px solid #ccc;
+    width: fit-content;
+
+    & img {
+      object-position: left center;
+    }
+  }
+
+  .ss_Settings {
+    border-left: 1px solid #ccc;
+    width: 210px;
+
+    & h3 {
+      font-size: 20px;
+      margin: 0;
+    }
+
+    .ss_SettingsGroup {
+      & h4 {
+        font-size: 14px;
+        margin: 0;
+      }
+
+      .ss_fields {
+        font-size: 14px;
+      }
+    }
+
+    & input[type="date"],
+    & select {
+      display: block;
+      width: 100%;
+    }
+
+    .ss_CheckboxLabel {
+      background: #efefef;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      border-radius: var(--ssButtonCornerRadius);
+      padding: 2px 7px 2px;
+      cursor: pointer;
+
+      > input {
+        margin: 0 0 1px;
+      }
+    }
+
+    .ss_decrease,
+    .ss_increase,
+    .ss_value {
+      display: inline-block;
+      min-width: 2em;
+      text-align: center;
+    }
+
+    .ss_ErrorMessage {
+      white-space: normal;
+    }
+  }
+
+  & button.ss_close {
+    text-align: center;
+  }
+
+  .ss_StationStatus ul {
+    font-size: 14px;
+  }
+
+  .ss_SummaryChart {
+    .ss_oldestDate {
+      white-space: nowrap;
+    }
+
+    .ss_latestCallEvent,
+    .ss_latestNoiseLevels {
+      text-align: center;
+      max-width: 320px;
+
+      > .ss_subTitle {
+        margin: 7px 0 0;
+        color: var(--ssTextColorGrey);
+      }
+
+      > .ss_time {
+        margin-top: 3px;
+      }
+    }
+
+    .ss_latestCallEvent {
+      & dl {
+        display: grid;
+        grid-template-columns: repeat(2, auto);
+        grid-template-rows: repeat(4, auto);
+        grid-auto-flow: column dense;
+        gap: 0 var(--ssGapMedium);
+        margin: var(--ssGapLarge) 0 0 0;
+      }
+
+      & dt,
+      & dd {
+        display: block;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        background: #e6effa;
+        color: #3c83da;
+        line-height: 1;
+      }
+
+      & dd {
+        color: #012d62;
+        font-size: 24px;
+        font-weight: bold;
+        border-radius: var(--ssCardCornerRadius) var(--ssCardCornerRadius) 0 0;
+        padding: 24px 20px 0 20px;
+      }
+
+      & dt {
+        border-radius: 0 0 var(--ssCardCornerRadius) var(--ssCardCornerRadius);
+        padding: 6px 20px 20px 20px;
+        text-transform: lowercase;
+        /* Fix a rendering bug in Safari */
+        margin-top: -1px;
+      }
+
+      & dt.ss_species,
+      & dd.ss_species {
+        grid-column: 1 / 3;
+      }
+      & dd.ss_species {
+        grid-row: 1 / 2;
+      }
+      & dt.ss_calls,
+      & dd.ss_calls {
+        grid-column: 1 / 2;
+      }
+      & dt.ss_callsPerMinute,
+      & dd.ss_callsPerMinute {
+        grid-column: 2 / 3;
+      }
+      & dd.ss_calls,
+      & dd.ss_callsPerMinute {
+        grid-row: 3 / 4;
+      }
+
+      & dt.ss_species,
+      & dd.ss_species {
+        background-color: var(--ssColorInfo);
+        color: white;
+      }
+      & dd.ss_species {
+        padding-top: 50px;
+        font-size: 40px;
+      }
+      & dt.ss_species {
+        padding-bottom: 50px;
+        font-size: 18px;
+        margin-bottom: var(--ssGapLarge);
+      }
+    }
+
+    .ss_latestNoiseLevels {
+      .ss_summary {
+        color: var(--ssTextColorGrey);
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .ss_Gauge {
+    .ss_content {
+      .ss_value {
+        font-size: 60px;
+        font-weight: bold;
+        line-height: 1;
+      }
+    }
+  }
+
+  .ss_AcousticEventDetail {
+    text-align: left;
+    container-type: inline-size;
+    container-name: ss-acoustic-event-detail;
+
+    .ss_stats {
+      display: grid;
+      gap: var(--ssGapMedium) var(--ssGapLarge);
+      margin: 20px auto 24px;
+      text-align: center;
+      justify-content: center;
+
+      .ss_species {
+        display: none;
+      }
+      &.ss_withIcon .ss_species {
+        display: block;
+        border-radius: var(--ssCardCornerRadius);
+        padding: 16px 16px 12px;
+        margin: 0;
+        background: #e6effa;
+        color: #3c83da;
+        text-align: center;
+        min-height: 80px;
+        max-width: 160px;
+      }
+
+      p {
+        margin: 7px 0 0;
+        color: var(--ssTextColorGrey);
+      }
+
+      .ss_SpeciesIcon {
+        height: 100%;
+        position: relative;
+
+        svg {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+
+    @container ss-acoustic-event-detail (min-width: 440px) {
+      .ss_stats.ss_withIcon {
+        gap: 0 var(--ssGapLarge);
+        text-align: left;
+        grid-template-columns: repeat(2, auto);
+
+        .ss_species {
+          width: 200px;
+          grid-row: 1 / 3;
+        }
+      }
+    }
+  }
+}

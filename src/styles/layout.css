@@ -1,0 +1,477 @@
+:root {
+  --ssGapSmall: 8px;
+  --ssGapMedium: 16px;
+  --ssGapLarge: 32px;
+  --ssGapXLarge: 48px;
+
+  --ssColorGood: #159a42;
+  --ssColorWarn: #ed8c05;
+  --ssColorBad: #cb0909;
+  --ssColorInfo: #0073ff;
+  --ssColorInfoHover: #0064dd;
+
+  --ssGaugeUnfilled: #cccccc;
+  --ssGaugeBackground: white;
+  --ssGaugeThickness: 22px;
+}
+
+.SeaStats_AppRoot {
+  position: relative;
+
+  .ss_ErrorMessage {
+    color: var(--ssColorBad);
+  }
+
+  > .ss_ErrorMessage {
+    text-align: center;
+  }
+
+  .ss_iconLeft {
+    margin-right: 4px;
+  }
+
+  .ss_iconRight {
+    margin-left: 4px;
+  }
+
+  .ss_AppContainer {
+    width: 100%;
+    height: 100%;
+    min-height: 300px;
+    display: flex;
+    align-items: stretch;
+    box-sizing: border-box;
+  }
+
+  .ss_App {
+    width: 100%;
+
+    &.desktop-layout {
+      display: flex;
+      /* gap: var(--ssGapLarge); */
+    }
+  }
+
+  .ss_ContentWrapper {
+    flex-grow: 2;
+    display: flex;
+    gap: var(--ssGapMedium);
+    flex-direction: column;
+    height: 100%;
+    box-sizing: border-box;
+    padding: var(--ssGapMedium);
+    overflow: auto;
+
+    > .ss_header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--ssGapSmall);
+
+      > h1 {
+        /* flex-grow: 2; */
+      }
+
+      > .ss_buttons {
+        display: flex;
+        gap: var(--ssGapSmall);
+      }
+    }
+
+    > .ss_content {
+      position: relative;
+      height: auto;
+      flex-grow: 2;
+
+      .ss_infoContent {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background: rgba(255, 255, 255, 0.9);
+      }
+
+      .ss_modalOverlay {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        height: 100%;
+        display: grid;
+        grid-template-rows: minmax(0, 1fr);
+        place-items: center;
+      }
+
+      .ss_modalVeil {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: #eeeeee81;
+      }
+
+      .ss_modalFrame {
+        box-sizing: border-box;
+        width: calc(100% - var(--ssGapSmall) * 2);
+        max-height: calc(100% - var(--ssGapSmall) * 2);
+        display: grid;
+        grid-template-rows: minmax(0, 1fr);
+        position: relative;
+      }
+
+      .ss_modalContent {
+        position: relative;
+        background: #fff;
+        padding: var(--ssGapMedium);
+        box-sizing: border-box;
+        width: 100%;
+        max-height: 100%;
+        overflow: auto;
+      }
+
+      .ss_closeModal {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 1em;
+        height: 1em;
+        box-sizing: content-box;
+        text-align: center;
+        border-radius: 50%;
+        transform: translate(50%, -50%);
+      }
+    }
+  }
+
+  .ss_App.desktop-layout {
+    .ss_ContentWrapper {
+      padding: var(--ssGapLarge);
+      > .ss_content {
+        .ss_modalFrame {
+          width: calc(100% - var(--ssGapXLarge) * 2);
+          max-height: calc(100% - var(--ssGapXLarge) * 2);
+        }
+
+        .ss_modalContent {
+          padding: var(--ssGapLarge);
+        }
+      }
+    }
+  }
+
+  .ss_Sidebar,
+  .ss_Settings {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ssGapSmall);
+    height: 100%;
+    overflow: auto;
+    white-space: nowrap;
+    justify-content: space-between;
+    background: #fff;
+    padding: var(--ssGapMedium);
+    box-sizing: border-box;
+    width: fit-content;
+  }
+
+  .ss_App.desktop-layout {
+    .ss_Sidebar,
+    .ss_Settings {
+      padding: var(--ssGapLarge);
+    }
+  }
+
+  .ss_Sidebar {
+    & img {
+      width: auto;
+      height: auto;
+      max-width: 180px;
+      max-height: 100px;
+      object-fit: contain;
+    }
+  }
+
+  .ss_Navigation {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ssGapSmall);
+  }
+
+  .ss_Settings {
+    & label {
+      display: block;
+      margin-bottom: 0.5em;
+    }
+  }
+
+  .ss_App.mobile-layout {
+    .ss_SidebarWrapper,
+    .ss_SettingsWrapper {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 100;
+      box-sizing: border-box;
+      overflow: auto;
+      pointer-events: none;
+      opacity: 0;
+      overflow: hidden;
+      opacity: 1;
+
+      &:before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        transition: opacity 0.3s ease-out;
+        background: rgba(0, 0, 0, 0.25);
+        opacity: 0;
+      }
+    }
+
+    &.nav-open .ss_SidebarWrapper,
+    .ss_SettingsWrapper.settings-open {
+      pointer-events: unset;
+      &:before {
+        opacity: 1;
+      }
+    }
+    .ss_Sidebar,
+    .ss_Settings {
+      min-height: 100%;
+    }
+
+    .ss_Sidebar {
+      transform: translateX(-100%);
+      transition: transform 0.3s ease-out;
+
+      .nav-open & {
+        transform: translateX(0);
+      }
+    }
+
+    .ss_Settings {
+      transform: translateX(100%);
+      transition: transform 0.3s ease-out;
+      margin-left: auto;
+
+      .settings-open & {
+        transform: translateX(0);
+      }
+    }
+  }
+
+  .ss_App.desktop-layout {
+    .ss_SidebarWrapper {
+      display: none;
+
+      .nav-open & {
+        display: block;
+      }
+    }
+
+    .ss_SettingsWrapper {
+      display: none;
+
+      &.settings-open {
+        display: block;
+      }
+    }
+  }
+
+  .ss_FieldTitle {
+    display: block;
+  }
+
+  & button.ss_close {
+    margin-top: auto;
+  }
+
+  .ss_StatusIndicator {
+    display: inline-block;
+    width: 0.6em;
+    height: 0.6em;
+    border-radius: 100%;
+
+    &.ss_good {
+      background: var(--ssColorGood);
+    }
+
+    &.ss_warn {
+      background: var(--ssColorWarn);
+    }
+
+    &.ss_bad {
+      background: var(--ssColorBad);
+    }
+  }
+
+  .ss_StaticGraphicChart {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    .ss_settingsControls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--ssGapSmall);
+      justify-content: center;
+
+      & select {
+        margin-left: 0.5em;
+      }
+    }
+  }
+  .ss_StaticGraphicChart .ss_image {
+    position: relative;
+    flex-grow: 2;
+  }
+  .ss_StaticGraphicChart img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .ss_ChartWrapper .ss_buttons {
+    display: flex;
+    gap: var(--ssGapSmall);
+    justify-content: center;
+  }
+
+  .ss_StationStatus ul {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  .ss_PlotlyChart {
+    width: 100%;
+    height: 100%;
+    /* Plotly is slow to redraw */
+    overflow: hidden;
+  }
+
+  .ss_LoadingSpinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+  }
+
+  .ss_LoadingOverlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    z-index: 1;
+  }
+
+  .chart-SummaryChart {
+    .ss_ContentWrapper {
+      gap: var(--ssGapLarge);
+      > .ss_content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
+
+  .ss_SummaryChart {
+    /* make a 2 column grid of 200px each that will wrap to one column on mobile */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--ssGapXLarge);
+    overflow: auto;
+    justify-items: center;
+    width: 100%;
+
+    .ss_latestCallEvent,
+    .ss_latestNoiseLevels {
+      text-align: center;
+      width: 100%;
+      max-width: 320px;
+    }
+  }
+
+  .ss_Gauge {
+    max-width: 280px;
+    margin: var(--ssGapLarge) auto;
+    overflow: hidden;
+    display: grid;
+    text-align: center;
+
+    .ss_gauge {
+      width: 100%;
+      height: 0;
+      padding-bottom: 100%;
+      margin-bottom: -9%;
+      transform: rotate(-0.375turn);
+      border-radius: 50%;
+      position: relative;
+      grid-column: 1 / 2;
+      grid-row: 1 / 3;
+
+      &:after {
+        content: "";
+        position: absolute;
+        left: var(--ssGaugeThickness);
+        top: var(--ssGaugeThickness);
+        right: var(--ssGaugeThickness);
+        bottom: var(--ssGaugeThickness);
+        border-radius: 50%;
+        background: var(--ssGaugeBackground);
+      }
+    }
+
+    .ss_content {
+      grid-column: 1 / 2;
+      grid-row: 1 / 3;
+      z-index: 1;
+      display: grid;
+      justify-content: center;
+      align-content: center;
+      margin-top: 6%;
+    }
+
+    .ss_percentile {
+      grid-column: 1 / 2;
+      grid-row: 2 / 3;
+      z-index: 1;
+
+      .ss_value {
+        font-weight: bold;
+      }
+    }
+
+    &.ss_good .ss_percentile .ss_value {
+      color: var(--ssColorGood);
+    }
+
+    &.ss_info .ss_percentile .ss_value {
+      color: var(--ssColorInfo);
+    }
+
+    &.ss_warn .ss_percentile .ss_value {
+      color: var(--ssColorWarn);
+    }
+
+    &.ss_bad .ss_percentile .ss_value {
+      color: var(--ssColorBad);
+    }
+  }
+}
