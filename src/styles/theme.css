@@ -315,6 +315,11 @@
     }
   }
 
+  .ss_AudioPlayer {
+    border-radius: var(--ssButtonCornerRadius);
+    overflow: hidden;
+  }
+
   .ss_AcousticEventDetail {
     text-align: left;
     container-type: inline-size;

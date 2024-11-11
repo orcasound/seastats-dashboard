@@ -34,13 +34,14 @@ Intended as 'home page' for the dashboard. Shows details of latest acoustic even
 
 ### Acoustic events chart
 
-A scatter chart displaying compiled acoustic activity events. User can select which signal type(s) they want to display and enable environmental overlays such as sunrise/sunset times and lunar phase.
+A scatter chart displaying compiled acoustic activity events. User can select which signal type(s) they want to display and enable environmental overlays such as sunrise/sunset times and lunar phase. Clicking on a point will display more information about the event, including an audio player and visualisation if audio is available.
 
 ![Screenshot of acoustic events chart](docs/images/chart-acoustic-events.png)
+![Screenshot of acoustic events chart](docs/images/chart-acoustic-events_audio-replay.png)
 
 ### Daily detections chart
 
-A bar chart displaying signal detection rates for 24h periods. User can select which signal type they want to display and enable smoothing options.
+A bar chart displaying signal detection rates for 24h periods. User can select which signal type they want to display and enable smoothing options. Audio samples can be played for each detection where available, with either a spectrogram or waveform display.
 
 ![Screenshot of daily detections chart](docs/images/chart-daily-detections.png)
 
@@ -110,20 +111,21 @@ Example result for `GET {API_URL}/organization/olab`:
 
 `data` result object structure:
 
-| Key             | Type    | Description                                                                                                                   |
-| --------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| stationKey      | string  | The key of the station.                                                                                                       |
-| organizationKey | string  | The key of the organization.                                                                                                  |
-| name            | string  | The name of the station.                                                                                                      |
-| latitude        | number  | The latitude of the station.                                                                                                  |
-| longitude       | number  | The longitude of the station.                                                                                                 |
-| timeZone        | string  | The time zone of the station ([IANA time zone canonical name](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)). |
-| logoUrl         | string  | The URL of the station's logo. (optional)                                                                                     |
-| updated         | string  | The last updated date and time of the station.                                                                                |
-| online          | boolean | Indicates whether the station is online.                                                                                      |
-| dataSummary     | array   | An array describing the types and ranges of data available for this station.                                                  |
-| uploadSummary   | array   | An array describing the uploads available for this station.                                                                   |
-| sidebarText     | array   | An array of label/text pairs to be displayed in the UI sidebar. (optional)                                                    |
+| Key                | Type    | Description                                                                                                                   |
+| ------------------ | ------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| stationKey         | string  | The key of the station.                                                                                                       |
+| organizationKey    | string  | The key of the organization.                                                                                                  |
+| name               | string  | The name of the station.                                                                                                      |
+| latitude           | number  | The latitude of the station.                                                                                                  |
+| longitude          | number  | The longitude of the station.                                                                                                 |
+| timeZone           | string  | The time zone of the station ([IANA time zone canonical name](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)). |
+| logoUrl            | string  | The URL of the station's logo. (optional)                                                                                     |
+| updated            | string  | The last updated date and time of the station.                                                                                |
+| online             | boolean | Indicates whether the station is online.                                                                                      |
+| dataSummary        | array   | An array describing the types and ranges of data available for this station.                                                  |
+| uploadSummary      | array   | An array describing the uploads available for this station.                                                                   |
+| sidebarText        | array   | An array of label/text pairs to be displayed in the UI sidebar. (optional)                                                    |
+| audioVisualisation | string  | Set to 'spectrogram' or leave blank for a classic waveform. (optional)                                                        |
 
 `dataSummary` object structure:
 
@@ -178,6 +180,7 @@ Example result for `GET {API_URL}/station/olab/fibs-01`:
         "text": "Northern Vancouver Island"
       }
     ],
+    "audioVisualisation": "spectrogram",
     "dataSummary": [
       {
         "dataPointType": "callEvent",
@@ -292,6 +295,7 @@ Optional query parameters:
 | species       | string         | The species of the data point.             |
 | callType      | string         | The call type of the data point.           |
 | callCount     | number         | The number of calls in the data point.     |
+| audioUrl      | string         | The URL to access an audio recording.      |
 
 Example result for `GET {API_URL}/data/olab/fibs-01?fromDate=2021-01-03&toDate=2021-01-03`:
 
@@ -313,7 +317,8 @@ Example result for `GET {API_URL}/data/olab/fibs-01?fromDate=2021-01-03&toDate=2
       "callType": "Social",
       "startDateTime": "2021-01-03T21:39:46.450Z",
       "endDateTime": "2021-01-03T21:44:53.900Z",
-      "callCount": 20
+      "callCount": 20,
+      "audioUrl": "https://your-seatstats-api-url.dev/station-upload/olab/fibs-01/audio/2021-01-03T21-39-46-450Z.mp4"
     },
     {
       "dataPointType": "recordingCoverage",

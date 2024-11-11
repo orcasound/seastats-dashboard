@@ -176,5 +176,6 @@ export function decorateCallEvent(callEvent, timeZone = "America/Vancouver") {
     },
     durationText: `${hours ? `${hours}h ` : ""}${remainderMinutes}m`,
     callsPerMinute: callEvent.callCount / minutes,
+    audioHint: callEvent.audioUrl ? "🔊 " : "",
   };
 }

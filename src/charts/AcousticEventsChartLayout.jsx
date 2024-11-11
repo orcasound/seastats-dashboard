@@ -11,6 +11,7 @@ import useSelectedCallTypes from "../hooks/useSelectedCallTypes";
 import CallOptionsControls from "../components/filter/CallOptionsControls";
 import SettingsGroup from "../components/basic/SettingsGroup";
 import CheckboxLabel from "../components/basic/CheckboxLabel";
+import AudioPlayer from "../components/AudioPlayer";
 import SpeciesIcon from "../components/basic/SpeciesIcon";
 import { Settings } from "../context/Settings";
 import speciesIconSvgs from "../components/basic/speciesIconSvgs";
@@ -50,6 +51,9 @@ function AcousticEventsChartLayout({
   const [moonInfo, setMoonInfo] = useState(true);
   const [showRecordingGaps, setShowRecordingGaps] = useState(true);
   const [selectedCallEvent, setSelectedCallEvent] = useState(null);
+  const {
+    stationData: { audioVisualisation },
+  } = useContext(Settings);
 
   const {
     callEventData,
@@ -156,7 +160,7 @@ function AcousticEventsChartLayout({
         color: markerColor,
       },
       hovertemplate: [
-        `<b>${label} detection</b>`,
+        `<b>%{customdata.audioHint}${label} detection</b>`,
         `%{customdata.timeFrom} – %{customdata.timeTo} (%{customdata.durationText})`,
         `<b>%{customdata.callCount}</b> calls  <b>%{customdata.callsPerMinute:.1f}</b> calls/m`,
         `<br><b>${hoverTemplateStrings.date}</b>`,
@@ -179,6 +183,7 @@ function AcousticEventsChartLayout({
       timeTo,
       callCount,
       callsPerMinute,
+      audioUrl,
       durationText,
       markerColor,
     } = selectedCallEvent;
@@ -204,6 +209,15 @@ function AcousticEventsChartLayout({
             <p className="ss_callsTotal">{callCount} calls</p>
           </div>
         </div>
+        {audioUrl && (
+          <AudioPlayer
+            audioUrl={audioUrl}
+            progressColor={markerColor}
+            audioVisualisation={audioVisualisation}
+            fftSamples={fftSamples[species] ?? fftSamples["default"]}
+            frequencyMax={maxFrequencies[species] ?? maxFrequencies["default"]}
+          />
+        )}
       </div>
     );
   }

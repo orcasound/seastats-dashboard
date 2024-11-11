@@ -23,7 +23,8 @@
     "react-dom": "^18.2.0",
     "react-error-boundary": "^4.0.3",
     "react-plotly.js": "^2.6.0",
-    "suncalc": "^1.9.0"
+    "suncalc": "^1.9.0",
+    "wavesurfer.js": "^7.7.15"
   },
   "devDependencies": {
     "@types/color": "^3.0.3",
