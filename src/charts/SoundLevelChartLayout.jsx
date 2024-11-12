@@ -134,8 +134,7 @@ function SoundLevelChartLayout({
 
   return (
     <PlotlyChart
-      // this key ensures the range slider resets when the date range changes
-      key={`${fromDate}-${toDate}`}
+      plotKey={`${fromDate}-${toDate}`}
       title={`${title}: ${selectedMetric}`}
       data={plotlyData}
       settingsControls={

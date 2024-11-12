@@ -17,6 +17,7 @@ function PlotlyChart({
   onClick,
   modalContent,
   closeModal,
+  plotKey,
 }) {
   const withDailySummary = Array.isArray(dailySummary?.customdata);
 
@@ -118,6 +119,8 @@ function PlotlyChart({
           {...plotlyProps}
           useResizeHandler={true}
           style={{ width: "100%", height: "100%" }}
+          // this key ensures the range slider resets when the date range changes
+          key={plotKey}
         />
       </div>
     </ChartWrapper>
@@ -137,6 +140,7 @@ PlotlyChart.propTypes = {
   onClick: PropTypes.func,
   modalContent: PropTypes.node,
   closeModal: PropTypes.func,
+  plotKey: PropTypes.string,
 };
 
 export default PlotlyChart;

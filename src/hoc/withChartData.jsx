@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 import useApi from "../hooks/useApi";
 import LoadingSpinner from "../components/basic/LoadingSpinner";
 import ErrorMessage from "../components/basic/ErrorMessage";
@@ -10,7 +10,7 @@ function withChartData(
   ChartComponent,
   { dataPointTypes = [], chartDataFromResponses = () => {} }
 ) {
-  return ({ minDate = "", maxDate = "", ...chartProps }) => {
+  const WrappedComponent = ({ minDate = "", maxDate = "", ...chartProps }) => {
     const settings = useContext(Settings);
     const { stationData } = settings;
     // Start with the last 12 months of data if available
@@ -49,6 +49,11 @@ function withChartData(
       [nextFromDate, nextToDate]
     );
 
+    const onChangeDateRange = useCallback((fromDate, toDate) => {
+      setNextFromDate(fromDate);
+      setNextToDate(toDate);
+    }, []);
+
     if (loadingData) return <LoadingSpinner />;
 
     if (errorMsg) return <ErrorMessage message={errorMsg} />;
@@ -64,14 +69,13 @@ function withChartData(
           toDate={toDate}
           minDate={minDate}
           maxDate={maxDate}
-          onChangeDateRange={(fromDate, toDate) => {
-            setNextFromDate(fromDate);
-            setNextToDate(toDate);
-          }}
+          onChangeDateRange={onChangeDateRange}
         />
       </>
     );
   };
+
+  return WrappedComponent;
 }
 
 export default withChartData;

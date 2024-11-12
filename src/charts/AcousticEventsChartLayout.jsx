@@ -241,8 +241,7 @@ function AcousticEventsChartLayout({
 
   return (
     <PlotlyChart
-      // this key ensures the range slider resets when the date range changes
-      key={`${fromDate}-${toDate}`}
+      plotKey={`${fromDate}-${toDate}`}
       title={title}
       data={plotlyData}
       settingsControls={

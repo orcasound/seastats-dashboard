@@ -14,11 +14,9 @@ function DateRangeControls({
   const [startDate, setStartDate] = useState(fromDate);
   const [endDate, setEndDate] = useState(toDate);
   const [error, setError] = useState(false);
-  const [mounted, setMounted] = useState(false);
 
   // Send the date range to the parent component post-render to avoid a slow UI
   useEffect(() => {
-    if (!mounted) return;
     const startDateObj = new Date(startDate);
     const endDateObj = new Date(endDate);
     const minDateObj = new Date(minDate);
@@ -35,14 +33,7 @@ function DateRangeControls({
     } else {
       setError(true);
     }
-  }, [startDate, endDate]);
-
-  useEffect(() => {
-    // This is a half-way fix for a bug caused by having to put a key on our PlotlyChart component.
-    // That causes this component to be destroyed and a new one created, and they end up competing with each other.
-    // We still have the issue that the date input collapses after each click, even if you're not finished with it, because it doesn't exist anymore.
-    setMounted(true);
-  }, []);
+  }, [startDate, endDate, minDate, maxDate, onChangeDateRange]);
 
   return (
     <SettingsGroup title="Date range">
