@@ -10,7 +10,7 @@ function getNoiseData(data) {
   if (!filteredData.length) {
     return null;
   }
-  const oldest = filteredData.at(1);
+  const oldest = filteredData.at(0);
   const latest = filteredData.at(-1);
   return {
     oldest,
