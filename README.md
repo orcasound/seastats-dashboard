@@ -4,13 +4,13 @@
 
 ## Overview
 
-SeaStats is an embeddable interactive dashboard for visualising bioacoustic data. This project has initially been developed with a focus on whale detections (via hydrophone audio recordings), but has been designed with the intention of it being adaptable for other uses.
+SeaStats is an embeddable interactive dashboard for visualising metrics from passive acoustic monitoring (PAM) data. This project has initially been developed with a focus on underwater sound (such as bio-acoustic detections and sound level measurement), but has been designed with the intention of it being adaptable for other interative data visualization uses.
 
 This repo contains the front-end dashboard web application. It requests data from a REST API, for which a specification is provided below. A [CloudFlare Workers implementation](https://github.com/orcasound/seastats-api-cloudflare-workers) of the API is available.
 
-The dashboard is designed to present bioacoustic data for a single hydrophone station at a time. Charts include filters for date range, signal type, and other options.
+The dashboard is designed to present acoustic data metrics for a single hydrophone station at a time. Charts include filters for date range, signal type, frequency bands, and other options.
 
-The API is designed to support multiple stations across one or more organizations, and the logo and other options can be customised for each organization.
+The API is designed to support multiple stations across one or more organizations, and the visual layout and data content can be customised for each organization.
 
 [See a demo here](https://seastats.whalesound.ca/olab/fibs-01).
 
@@ -21,7 +21,7 @@ This project is funded by [NCCS](https://bcwhales.org/) (BC Whales) and [Orcasou
 ## Technical stack
 
 - [**React.js**](https://reactjs.org/) for the front-end UI and rendering framework. This is a mature product that is widely used by developers. It is the leading 'reactive' framework.
-- [**Plotly**](https://plotly.com/javascript/react/) for charting. This library is very capable and popular, and is offered in a number of different programming languages, including Python. This makes it a good choice for an open source project as contributors who aren't familiar with Javascript may nonetheless have experience with Plotly and be able to work on this layer as the APIs are very similar across different languages.
+- [**Plotly**](https://plotly.com/javascript/react/) for charting. This library is very capable and popular. It is offered in a number of different programming languages, including Python. This makes it a good choice for an open source project as contributors who are not familiar with Javascript may nonetheless have experience with Plotly and be able to work on this layer as the APIs are similar across different languages.
 - [**Vite**](https://vitejs.dev/guide/) for building and local development.
 
 ## Available components
@@ -34,13 +34,13 @@ Intended as 'home page' for the dashboard. Shows details of latest acoustic even
 
 ### Acoustic events chart
 
-A scatter chart displaying compiled acoustic activity events. User can select which signal type they want to display and enable sunrise/sunset times and lunar phase overlays.
+A scatter chart displaying compiled acoustic activity events. User can select which signal type(s) they want to display and enable environmental overlays such as sunrise/sunset times and lunar phase.
 
 ![Screenshot of acoustic events chart](docs/images/chart-acoustic-events.png)
 
 ### Daily detections chart
 
-A bar chart displaying call detection rates for 24h periods. User can select which signal type they want to display and enable smoothing options.
+A bar chart displaying signal detection rates for 24h periods. User can select which signal type they want to display and enable smoothing options.
 
 ![Screenshot of daily detections chart](docs/images/chart-daily-detections.png)
 
@@ -52,7 +52,7 @@ A bar chart displaying recording consistency (station uptime). Includes smoothin
 
 ### Sound level chart
 
-A line chart displaying noise levels and noise exceedance percentiles. User can select metric type and frequency band to display.
+A line chart displaying sound pressure levels (SPLs) and exceedance percentiles. User can select metric type and frequency band to display.
 
 ![Screenshot of sound level chart](docs/images/chart-sound-level.png)
 
@@ -64,7 +64,7 @@ A static image is shown for a selected date. User can select a date to view (lim
 
 ### User settings
 
-The values that can be selected in component settings (such as call type and frequency bands) are dynamically produced based on the data returned from the API.
+The values that can be selected in component settings include signal type (for bio-acoustic detections) and frequency bands (for SPLs). Results are dynamically produced based on the data returned from the API.
 
 ## API specification
 
