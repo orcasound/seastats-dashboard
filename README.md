@@ -6,7 +6,7 @@
 
 SeaStats is an embeddable interactive dashboard for visualising metrics from passive acoustic monitoring (PAM) data. This project has initially been developed with a focus on underwater sound (such as bio-acoustic detections and sound level measurement), but has been designed with the intention of it being adaptable for other interative data visualization uses.
 
-This repo contains the front-end dashboard web application. It requests data from a REST API, for which a specification is provided below. A [CloudFlare Workers implementation](https://github.com/orcasound/seastats-api-cloudflare-workers) of the API is available.
+This repo contains the front-end dashboard web application. It requests data from a REST API, for which a specification is provided below. A [CloudFlare Workers implementation](https://github.com/orcasound/seastats-api-cloudflare) of the API is available.
 
 The dashboard is designed to present acoustic data metrics for a single hydrophone station at a time. Charts include filters for date range, signal type, frequency bands, and other options.
 
